@@ -13,8 +13,9 @@ export class App {
   protected readonly title = 'client';
   protected members = signal<any>([]);
 
-  ngOnInit() {
-    this.members.set(this.getMembers());
+  async ngOnInit() {
+    const membersData = await this.getMembers();
+    this.members.set(membersData);
   }
 
   async getMembers() {
