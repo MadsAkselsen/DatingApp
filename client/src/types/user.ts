@@ -14,4 +14,5 @@ export interface RegisterCreds {
   displayName: string;
   username: string;
   password: string;
+  email: string;
 }
