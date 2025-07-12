@@ -11,7 +11,7 @@ import { Nav } from "../layout/nav/nav";
 })
 export class App {
   private http = inject(HttpClient);
-  protected readonly title = 'client';
+  protected readonly title = 'Dating app';
   protected members = signal<any>([]);
 
   async ngOnInit() {
