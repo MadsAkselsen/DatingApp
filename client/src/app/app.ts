@@ -3,18 +3,20 @@ import { Component, inject, signal } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Nav } from "../layout/nav/nav";
 import { AccountService } from '../core/services/account-service';
-import { Home } from "../features/home/home";
 import { User } from '../types/user';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [Nav, Home],
+  imports: [Nav, RouterOutlet, RouterModule, NgClass],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   private accountService = inject(AccountService);
   private http = inject(HttpClient);
+  protected router = inject(Router);
   protected readonly title = 'Dating app';
   protected members = signal<User[]>([]);
 
