@@ -15,6 +15,7 @@ export class Nav {
   protected router = inject(Router);
   protected toastService = inject(ToastService);
   protected creds: any = {};
+
   login() {
     this.accountService.login(this.creds).subscribe({
       next: (response) => {
