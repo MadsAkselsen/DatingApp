@@ -9,7 +9,6 @@ import { tap } from 'rxjs';
 export class AccountService {
   private http = inject(HttpClient);
   currentUser = signal<User | null>(null);
-
   baseUrl = 'https://localhost:5001/api/';
 
   register(creds: RegisterCreds) {
