@@ -1,6 +1,7 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { RegisterCreds, User } from '../../../types/user';
+import { AccountService } from '../../../core/services/account-service';
 
 @Component({
   selector: 'app-register',
@@ -9,16 +10,23 @@ import { RegisterCreds, User } from '../../../types/user';
   styleUrl: './register.css'
 })
 export class Register {
-  membersFromHome = input.required<User[]>();
+  cancelRegister = output<boolean>();
   protected creds = {} as RegisterCreds;
-  protected registerMode = signal(false);
+  private accountService = inject(AccountService);
 
   register() {
-    console.log(this.creds);
+    this.accountService.register(this.creds).subscribe({
+      next: () => {
+        this.cancel();
+      },
+      error: () => {
+        console.log("error");
+      }
+    });
   }
 
   cancel() {
-    this.registerMode.set(false);
+    this.cancelRegister.emit(false);
   }
 
   // protected registerForm = new FormGroup({
