@@ -7,6 +7,7 @@ using API.Extensions;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using API.Errors;
 
 namespace API.Controllers;
 
@@ -15,7 +16,7 @@ public class AccountController(AppDbContext context, ITokenService tokenService)
     [HttpPost("register")] // api/account/register
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
-        if (await EmailExists(registerDto.Email)) return BadRequest("Email already exists");
+        if (await EmailExists(registerDto.Email)) throw new BadRequestException("Email already exists");
         
         using var hmac = new HMACSHA512();
 
@@ -38,14 +39,14 @@ public class AccountController(AppDbContext context, ITokenService tokenService)
     {
         var user = await context.Users.SingleOrDefaultAsync(x => x.Email == loginDto.Email);
         
-        if (user == null) return Unauthorized("Invalid email address");
+        if (user == null) throw new UnauthorizedException("Invalid email address");
         
         using var hmac = new HMACSHA512(user.PasswordSalt);
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
 
         for (var i = 0; i < computedHash.Length; i++)
         {
-            if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
+            if (computedHash[i] != user.PasswordHash[i]) throw new UnauthorizedException("Invalid password");
         }
 
         return user.ToDto(tokenService);
