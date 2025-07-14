@@ -21,9 +21,9 @@ public class Seed
             Console.WriteLine("No members in seed database");
         }
 
-        using var hmac = new HMACSHA512();
         foreach (var member in members)
         {
+            using var hmac = new HMACSHA512();
             var user = new AppUser
             {
                 Id = member.Id,
