@@ -1,18 +1,23 @@
-export interface User {
+export type User = {
   id: string;
   displayName: string;
+  email: string;
   token: string;
   imageUrl?: string;
+  roles: string[];
 }
 
-export interface LoginCreds {
+export type LoginCreds = {
   email: string;
   password: string;
 }
 
-export interface RegisterCreds {
+export type RegisterCreds = {
+  email: string;
   displayName: string;
-  username: string;
   password: string;
-  email: string;
+  gender: string;
+  dateOfBirth: string;
+  city: string;
+  country: string;
 }
