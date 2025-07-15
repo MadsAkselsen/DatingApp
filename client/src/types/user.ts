@@ -2,7 +2,7 @@ export interface User {
   id: string;
   displayName: string;
   token: string;
-  photoUrl?: string;
+  imageUrl?: string;
 }
 
 export interface LoginCreds {

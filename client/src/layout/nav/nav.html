@@ -40,7 +40,7 @@
           role="button"
           class="flex items-center text-white text-xl gap-3 cursor-pointer"
         >
-          <img src="/user.png" alt="avatar" class="size-8 rounded-full" />
+          <img [src]="user?.imageUrl || '/user.png'" alt="avatar" class="h-10 w-10 rounded-full" />
           <span class="text-white">{{ user.displayName }}</span>
         </div>
         <ul
